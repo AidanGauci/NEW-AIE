@@ -64,7 +64,6 @@ public class EnemyController : MonoBehaviour {
 	{
 		if (health == 0)
 		{
-            spawnLink.aliveEnemies--;
             if ((Random.value <= 1) && spawnLink.healthCanSpawn && (thePlayer.currentHealth != thePlayer.maxHealth))
             {
                 Instantiate(healthPickup, transform.position, Quaternion.identity);
