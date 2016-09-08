@@ -1,0 +1,14 @@
+Pawn: 2 health, 1 bullet damage
+Hawk: 1 health, 1 bullet damage
+Gauntler: 5 health, 2 bullet damage, slow shooting though
+Vida: 3 health, 3 bullet damage, slow shooting though
+Ravager: 7 health, 4 bullet damage, be scared
+
+1st wave: back row: 3 hawks -  next row: 4 pawns
+2nd wave: back row: 3 hawks - next row: 1 pawn, 1 gauntler, 1 pawn
+3rd wave: back row: 2 vidas - next row: 4 pawns
+4th wave: back row: 3 hawks - next row: 2 vidas - next row: 3 gauntlers
+5th wave: back row: 1 ravager - next row: 2 vidas
+
+Barriers are made of 4 cubes, each break separately
+each row acts as a group of their row when dealing with edges, but all enemies in a wave move vertically as one

@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &152858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 467346}
+  - 114: {fileID: 11407908}
+  - 114: {fileID: 11483280}
+  m_Layer: 0
+  m_Name: SpawnContoller
+  m_TagString: Untagged
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &467346
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152858}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11407908
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58ca35e36c2beda47a8f7cc5fdc1a598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemies:
+  - {fileID: 199386, guid: 5621b60a2c47eaa45aba72b5fc7ee6bf, type: 2}
+  - {fileID: 173692, guid: 6b7e87354a742b64cba10cd6f259c3e3, type: 2}
+  - {fileID: 101474, guid: dfc2725736a0ea34289a921c30598444, type: 2}
+  - {fileID: 135382, guid: 0d538b0d8ec3c3946879432fe4153560, type: 2}
+  - {fileID: 110584, guid: 5f40d4eb6a10d0b4a951d6c3b21a247a, type: 2}
+  player: {fileID: 157768, guid: 03181b816c4c00343af6754db265e55c, type: 2}
+  aliveEnemies: 0
+--- !u!114 &11483280
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2ded2ebe1b9d6842a6e8d402df19a04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletSpawnPos: {fileID: 0}
+  bullet: {fileID: 0}
+  currentDirection: 0
+  spawnControl: {fileID: 0}
+  LayerID: 0
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 152858}
+  m_IsPrefabParent: 1
