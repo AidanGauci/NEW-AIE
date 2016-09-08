@@ -16,7 +16,10 @@ public class BulletScript : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-		//direction = GameObject.FindGameObjectWithTag ("Player").transform.position - transform.position;
+        if (bulletTag == "Enemy")
+        {
+            direction = GameObject.FindGameObjectWithTag("Player").transform.position - transform.position;
+        }
 	}
 	
 	// Update is called once per frame
