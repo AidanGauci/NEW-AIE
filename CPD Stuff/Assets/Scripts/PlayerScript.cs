@@ -19,7 +19,7 @@ public class PlayerScript : MonoBehaviour {
     private Vector3 pos = new Vector3(0, -3, 0);
     private Vector3 prevPos = new Vector3(0, -3, 0);
     private int score = 0;
-    
+    private float currentFireRate;
     private int m_direction = 0;
     private bool leftPress = false;
     private bool rightPress = false;
@@ -32,6 +32,7 @@ public class PlayerScript : MonoBehaviour {
         float halfSelfWidth = transform.localScale.x / 2;
         screenHalfWidthInWorldUnits = Camera.main.aspect * Camera.main.orthographicSize - halfSelfWidth;
         currentHealth = maxHealth;
+        currentFireRate = fireRate;
     }
 
 	// Update is called once per frame
@@ -68,12 +69,12 @@ public class PlayerScript : MonoBehaviour {
         //deals with fireRate
         if (canFire == false)
         {
-            fireRate -= Time.deltaTime;
+            currentFireRate -= Time.deltaTime;
         }
-        if (fireRate <= 0)
+        if (currentFireRate <= 0)
         {
             canFire = true;
-            fireRate = 1;
+            currentFireRate = fireRate;
         }
 
         if (delayTime > 0)
@@ -160,14 +161,5 @@ public class PlayerScript : MonoBehaviour {
     void EndGame()
     {
         
-    }
-
-   void OnTriggerEnter2D(Collider2D hit)
-    {
-        if (hit.gameObject.tag == "Pickup")
-        {
-            currentHealth = maxHealth;
-            Destroy(hit.gameObject);
-        }
     }
 }

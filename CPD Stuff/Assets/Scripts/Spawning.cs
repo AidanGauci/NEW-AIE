@@ -3,19 +3,27 @@ using System.Collections;
 
 public class Spawning : MonoBehaviour {
 
+    //public member variables
 	public GameObject[] enemies;
 	public GameObject player;
 	public int aliveEnemies = 0;
+	public int currentLevel = 0;
+    [HideInInspector]
+    public bool healthCanSpawn = true;
+    public int healthLevel;
 
-	private int currentLevel = 0;
+    //private member variables
 	private int maxLevel = 5;
 	private int currentMoveDir = -1;
 	private bool b_LoadingLevel = false;
+    private EnemyController healthRestrict;
 
 	// Use this for initialization
 	void Start () {
 		LoadPlayer ();
 		LoadNextLevel ();
+        healthRestrict = GetComponent<EnemyController>();
+        healthLevel = currentLevel;
 	}
 	
 	// Update is called once per frame
@@ -23,6 +31,10 @@ public class Spawning : MonoBehaviour {
 		if (aliveEnemies == 0 && !b_LoadingLevel)
 		{
 			LoadNextLevel ();
+            if (healthCanSpawn)
+            {
+                healthLevel = currentLevel;
+            }
 		}
 	}
 
@@ -101,7 +113,8 @@ public class Spawning : MonoBehaviour {
 			Debug.Log("Spawn enemy " + aliveEnemies);
 		}
 		GameObject _enemy = (GameObject) Instantiate (enemies[3], new Vector3 (0, 1.5f, 0), Quaternion.identity);
-		_enemy.GetComponent<EnemyController> ().currentDirection = currentMoveDir;
+        aliveEnemies++;
+        _enemy.GetComponent<EnemyController> ().currentDirection = currentMoveDir;
 		_enemy.GetComponent<EnemyController> ().LayerID = 0;
 		b_LoadingLevel = false;
 		GetComponent<SquadController> ().GetEnemies ();
