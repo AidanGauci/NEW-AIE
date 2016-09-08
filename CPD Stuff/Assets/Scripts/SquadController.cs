@@ -4,12 +4,7 @@ using System.Collections.Generic;
 
 public class SquadController : MonoBehaviour {
 
-	public Transform bulletSpawnPos;
-	public GameObject bullet;
-	public GameObject spawnControl;
-	public int currentDirection;
-	public int LayerID;
-
+	private Spawning spawnLink;
 	private float screenHalfWidthInWorldUnits;
 	private List<EnemyController> activeEnemies = new List<EnemyController>();
 
@@ -17,6 +12,7 @@ public class SquadController : MonoBehaviour {
 	void Start () {
 		float halfSelfWidth = transform.localScale.x / 2;
 		screenHalfWidthInWorldUnits = Camera.main.aspect * Camera.main.orthographicSize - halfSelfWidth;
+		spawnLink = GetComponent<Spawning> ();
 	}
 
 	// Update is called once per frame
@@ -50,6 +46,7 @@ public class SquadController : MonoBehaviour {
 			{
 				Destroy (currentEnemy.gameObject);
 				activeEnemies.Remove (currentEnemy);
+				spawnLink.aliveEnemies--;
 			}
 		}
 	}

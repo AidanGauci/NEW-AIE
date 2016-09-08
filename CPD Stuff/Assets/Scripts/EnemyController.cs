@@ -17,13 +17,11 @@ public class EnemyController : MonoBehaviour {
 
 	private float maxVerticalTimeDelay = 10f;
 	private float fireDelay;
-	private Spawning spawnLink;
 
 	// Use this for initialization
 	void Start () {
 		fireDelay = Random.Range (1, 10);
 		Invoke("FireBullet", fireDelay);
-		spawnLink = spawnControl.GetComponent<Spawning>();
 	}
 	
 	// Update is called once per frame

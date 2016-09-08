@@ -45,6 +45,11 @@ public class Spawning : MonoBehaviour {
 		{
 			Invoke ("LoadLevel" + currentLevel, 0);
 		}
+		else if (currentLevel > maxLevel)
+		{
+			GameController GC = new GameController ();
+			GC.LoadEndMenu ();
+		}
 	}
 
 	void LoadLevel1()
@@ -101,6 +106,7 @@ public class Spawning : MonoBehaviour {
 			Debug.Log("Spawn enemy " + aliveEnemies);
 		}
 		GameObject _enemy = (GameObject) Instantiate (enemies[3], new Vector3 (0, 1.5f, 0), Quaternion.identity);
+		aliveEnemies++;
 		_enemy.GetComponent<EnemyController> ().currentDirection = currentMoveDir;
 		_enemy.GetComponent<EnemyController> ().LayerID = 0;
 		b_LoadingLevel = false;
@@ -192,6 +198,7 @@ public class Spawning : MonoBehaviour {
 		}
 		ChangeMoveDir ();
 		GameObject _enemy = (GameObject) Instantiate (enemies[4], new Vector3 (0, 3.2f, 0), Quaternion.identity);
+		aliveEnemies++;
 		_enemy.GetComponent<EnemyController> ().currentDirection = currentMoveDir;
 		_enemy.GetComponent<EnemyController> ().LayerID = 1;
 		b_LoadingLevel = false;
