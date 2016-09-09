@@ -69,6 +69,7 @@ public class EnemyController : MonoBehaviour {
                 Instantiate(healthPickup, transform.position, Quaternion.identity);
                 spawnLink.healthCanSpawn = false;
             }
+			thePlayer.score++;
             return true;
 		}
 		return false;

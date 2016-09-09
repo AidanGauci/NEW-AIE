@@ -8,17 +8,18 @@ public class PlayerScript : MonoBehaviour {
     //public member variables
     public int maxHealth = 5;
     public int currentHealth;
+	public int score = 0;
     public float speed = 5;
     public float fireRate = 1;
     public float InvulnTime = 1;
     public float delayTime;
-    public Text scoreOutput;
     public GameObject bullet;
+	[HideInInspector]
+	public bool canShoot = true;
 
     //private member variables
     private Vector3 pos = new Vector3(0, -3, 0);
     private Vector3 prevPos = new Vector3(0, -3, 0);
-    private int score = 0;
     private float currentFireRate;
     private int m_direction = 0;
     private bool leftPress = false;
@@ -42,21 +43,17 @@ public class PlayerScript : MonoBehaviour {
 		{
 			SwitchOn (1);
 		}
-		else
-		{
-			SwitchOff (-1);
-		}
-
-		if(Input.GetAxis("Horizontal") < 0)
+		else if(Input.GetAxis("Horizontal") < 0)
 		{
 			SwitchOn (-1);
 		}
 		else
 		{
 			SwitchOff (-1);
+			SwitchOff (1);
 		}
 
-		if(Input.GetAxisRaw("Fire1") != 0)
+		if(Input.GetAxisRaw("Fire1") != 0 && canShoot)
 		{
 			FireShot (1);
 		}

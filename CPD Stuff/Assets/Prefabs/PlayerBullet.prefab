@@ -56,7 +56,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 5
-  lifetime: 5
+  lifetime: 3
   bulletTag: Player
   direction: {x: 0, y: 1, z: 0}
 --- !u!212 &21283126
@@ -150,7 +150,7 @@ GameObject:
   - 50: {fileID: 5012266}
   m_Layer: 0
   m_Name: PlayerBullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
