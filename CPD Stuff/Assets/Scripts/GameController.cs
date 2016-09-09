@@ -26,8 +26,9 @@ public class GameController : MonoBehaviour {
 	public void LoadEndMenu(int Score)
 	{
 		SceneManager.LoadScene ("EndMenu");
+
 		RoundScore = Score;
-		Invoke("DisplayScores", 0.1f);
+		Invoke("SendScore", 0.01f);
 	}
 
 	public void QuitGame()
@@ -35,9 +36,9 @@ public class GameController : MonoBehaviour {
 		Application.Quit ();
 	}
 
-	void DisplayScores()
+	void SendScore()
 	{
-		Text scoreDisplayBox = (Text) GameObject.Find ("ScoreBox").GetComponent<Text>();
-		scoreDisplayBox.text = RoundScore.ToString ();
+		GameObject scriptHolder = (GameObject)GameObject.Find ("MainCanvas");
+		scriptHolder.GetComponent<EndScreenController> ().score = RoundScore;
 	}
 }
