@@ -25,6 +25,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.1988236, y: 0.9309667, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -39,7 +40,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb8f1fe382282244a53c20536ba67c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cube: {fileID: 120122, guid: f76d81c6d7cd4e44096b7be62a752533, type: 2}
+  cube: {fileID: 1000013712429036, guid: 2f35e6c1ecfdf1447a6764ae6f7a03e9, type: 2}
+  leftSide: {fileID: 1000010696447892, guid: a8888b817a48ff64181a14106855521e, type: 2}
+  rightSide: {fileID: 1000013685163868, guid: 1f9b965c7c9ddc14386f4cbcee3284eb, type: 2}
+  FullBarrier: {fileID: 21300000, guid: 94ea4c01984cbcf429afadebc48311f9, type: 3}
+  HalfBarrier: {fileID: 21300000, guid: f7c694a5757656c498c75a45db933efa, type: 3}
+  DeadBarrier: {fileID: 21300000, guid: 0fd605bb4a1c013478df0bb89aadb3fd, type: 3}
+  FullRightBarrier: {fileID: 21300000, guid: 7ad6419cd059e5147a49dd05146bd78c, type: 3}
+  HalfRightBarrier: {fileID: 21300000, guid: 90f2e328f512a594cbcd2e8a47a0c249, type: 3}
+  DeadRightBarrier: {fileID: 21300000, guid: e5c835d65a46f304e8bcb3f2fcdb9c4f, type: 3}
+  FullLeftBarrier: {fileID: 21300000, guid: f84bee8314701054696a9cbf09c6f2f7, type: 3}
+  HalfLeftBarrier: {fileID: 21300000, guid: a32aca730d562d04b92fc9db7c54505b, type: 3}
+  DeadLeftBarrier: {fileID: 21300000, guid: ec832556ddbba0747b1d55f4dd33733d, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
