@@ -16,6 +16,7 @@ public class EnemyController : MonoBehaviour {
 	public float directionChangeDelay = 1f;
 	public float timeSinceFlip = 0;
 	public float verticalTimeDelay = 10f;
+    public float moveSpeed = 1;
     
     //private member variables
     private float maxVerticalTimeDelay = 10f;
@@ -64,7 +65,7 @@ public class EnemyController : MonoBehaviour {
 	{
 		if (health == 0)
 		{
-            if ((Random.value <= 0.25f) && spawnLink.healthCanSpawn && (thePlayer.currentHealth != thePlayer.maxHealth))
+            if ((Random.value <= 0.2f) && spawnLink.healthCanSpawn && (thePlayer.currentHealth != thePlayer.maxHealth))
             {
                 Instantiate(healthPickup, transform.position, Quaternion.identity);
                 spawnLink.healthCanSpawn = false;

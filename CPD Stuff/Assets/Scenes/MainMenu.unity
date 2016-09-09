@@ -1016,7 +1016,7 @@ GameObject:
   - 4: {fileID: 1714653963}
   - 212: {fileID: 1714653962}
   m_Layer: 0
-  m_Name: corona_ft
+  m_Name: BackgroundSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

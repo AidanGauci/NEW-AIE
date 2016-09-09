@@ -6,13 +6,13 @@ public class Spawning : MonoBehaviour {
 
     //public member variables
 	public GameObject[] enemies;
-	public GameObject player;
     public GameObject healthGlobe;
 	public int aliveEnemies = 0;
 	public int currentLevel = 0;
+    public int healthLevel;
+
     [HideInInspector]
     public bool healthCanSpawn = true;
-    public int healthLevel;
 
     //private member variables
     private int maxLevel = 5;
@@ -20,15 +20,21 @@ public class Spawning : MonoBehaviour {
     private int refPlayerHealth;
 	private bool b_LoadingLevel = false;
 	private GameObject myPlayer;
+	private GameObject player;
     private PlayerScript thisPlayer;
     private List<GameObject> HealthMeter = new List<GameObject>();
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Awake()
     {
-		LoadPlayer ();
+        player = (GameObject)GameObject.FindGameObjectWithTag("Player");
+        thisPlayer = player.GetComponent<PlayerScript>();
+    }
+
+    void Start ()
+    {
+        //LoadPlayer ();
 		LoadNextLevel ();
-        thisPlayer = myPlayer.GetComponent<PlayerScript>();
         healthLevel = currentLevel;
         float xPos = -1.361f;
         for (int count = 0; count < 10; count++)
@@ -86,7 +92,7 @@ public class Spawning : MonoBehaviour {
 		else if (currentLevel > maxLevel)
 		{
 			GameController GC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-			GC.LoadEndMenu (myPlayer.GetComponent<PlayerScript>().score);
+			GC.LoadEndMenu (thisPlayer.score);
 		}
 
 		if (healthCanSpawn)
@@ -94,7 +100,7 @@ public class Spawning : MonoBehaviour {
 			healthLevel = currentLevel;
 		}
 
-		myPlayer.GetComponent<PlayerScript>().canShoot = true;
+        thisPlayer.canShoot = true;
 	}
 
 	void LoadLevel1()
@@ -264,7 +270,7 @@ public class Spawning : MonoBehaviour {
 
 		if (max != 0)
 		{
-			myPlayer.GetComponent<PlayerScript>().canShoot = false;
+            thisPlayer.canShoot = false;
 		}
 
 		int finalDelay = (int)max + 1;

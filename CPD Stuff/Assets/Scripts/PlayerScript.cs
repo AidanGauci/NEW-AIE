@@ -24,7 +24,7 @@ public class PlayerScript : MonoBehaviour {
     private int m_direction = 0;
     private bool leftPress = false;
     private bool rightPress = false;
-    private bool canFire = true;
+    private bool canFire = false;
     private float screenHalfWidthInWorldUnits;
 	
     //used to initialize shtuff
@@ -39,24 +39,31 @@ public class PlayerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		if(Input.GetAxis("Horizontal") > 0)
-		{
-			SwitchOn (1);
-		}
-		else if(Input.GetAxis("Horizontal") < 0)
-		{
-			SwitchOn (-1);
-		}
-		else
-		{
-			SwitchOff (-1);
-			SwitchOff (1);
-		}
+        if (Input.GetAxis("Horizontal") > 0)
+        {
+            SwitchOn(1);
+        }
+        else if (Input.GetAxis("Horizontal") < 0)
+        {
+            SwitchOn(-1);
+        }
+        else
+        {
+            SwitchOff(-1);
+            SwitchOff(1);
+        }
 
-		if(Input.GetAxisRaw("Fire1") != 0 && canShoot)
-		{
-			FireShot (1);
-		}
+        if (Input.GetAxisRaw("Jump") != 0 && canShoot)
+        {
+            FireShot();
+        }
+        else
+        {
+            StopShoot();
+        }
+
+
+
         //end-game stuff
         if (currentHealth <= 0)// || end-game constraints met)
         {
@@ -64,13 +71,14 @@ public class PlayerScript : MonoBehaviour {
         }
 
         //deals with fireRate
-        if (canFire == false)
+        if (currentFireRate > 0)
         {
             currentFireRate -= Time.deltaTime;
         }
-        if (currentFireRate <= 0)
+        if (currentFireRate <= 0 && canFire)
         {
-            canFire = true;
+            Vector3 bulletPos = transform.position + (Vector3.up * 0.1f);
+            Instantiate(bullet, bulletPos, Quaternion.identity);
             currentFireRate = fireRate;
         }
 
@@ -98,15 +106,14 @@ public class PlayerScript : MonoBehaviour {
         }
 	}
     //shoots bullet from player
-    public void FireShot(int shoot)
+    public void FireShot()
     {
-        if (shoot == 1 && canFire)
-        {
-            Vector3 bulletPos = transform.position + (Vector3.up * 0.1f);
-            Instantiate(bullet, bulletPos, Quaternion.identity);
+        canFire = true;
+    }
 
-            canFire = false;
-        }
+    public void StopShoot()
+    {
+        canFire = false;
     }
 
     //moves player according to button input
@@ -153,6 +160,8 @@ public class PlayerScript : MonoBehaviour {
         }
         m_direction = direction;
     }
+
+
 
     //calls end game screen when out of health
     void EndGame()
