@@ -3,11 +3,25 @@ using System.Collections.Generic;
 
 public class BarrierScript : MonoBehaviour {
 
-    //private member variables
-    private List<GameObject> cubeList = new List<GameObject>();
-
     //public member variables
     public GameObject cube;
+    public GameObject leftSide;
+    public GameObject rightSide;
+
+    public Sprite FullBarrier;
+    public Sprite HalfBarrier;
+    public Sprite DeadBarrier;
+
+    public Sprite FullRightBarrier;
+    public Sprite HalfRightBarrier;
+    public Sprite DeadRightBarrier;
+
+    public Sprite FullLeftBarrier;
+    public Sprite HalfLeftBarrier;
+    public Sprite DeadLeftBarrier;
+
+    //private member variables
+    private List<GameObject> cubeList = new List<GameObject>();
 
 	// Use this for initialization
 	void Start ()
@@ -26,7 +40,36 @@ public class BarrierScript : MonoBehaviour {
             {
                 Destroy(cubeList[count]);
                 cubeList.RemoveAt(count);
-                
+            }
+            else if (cubeList[count].GetComponent<CubeScript>().health == 1)
+            {
+                if (cubeList[count].GetComponent<SpriteRenderer>().sprite == HalfBarrier)
+                {
+                    cubeList[count].GetComponent<SpriteRenderer>().sprite = DeadBarrier;
+                }
+                else if (cubeList[count].GetComponent<SpriteRenderer>().sprite == HalfRightBarrier)
+                { 
+                    cubeList[count].GetComponent<SpriteRenderer>().sprite = DeadRightBarrier;
+                }
+                else if (cubeList[count].GetComponent<SpriteRenderer>().sprite == HalfLeftBarrier)
+                {
+                    cubeList[count].GetComponent<SpriteRenderer>().sprite = DeadLeftBarrier;
+                }
+            }
+            else if (cubeList[count].GetComponent<CubeScript>().health == 2 || cubeList[count].GetComponent<CubeScript>().health == 3)
+            {
+                if (cubeList[count].GetComponent<SpriteRenderer>().sprite == FullBarrier)
+                {
+                    cubeList[count].GetComponent<SpriteRenderer>().sprite = HalfBarrier;
+                }
+                else if (cubeList[count].GetComponent<SpriteRenderer>().sprite == FullRightBarrier)
+                {
+                    cubeList[count].GetComponent<SpriteRenderer>().sprite = HalfRightBarrier;
+                }
+                else if (cubeList[count].GetComponent<SpriteRenderer>().sprite == FullLeftBarrier)
+                {
+                    cubeList[count].GetComponent<SpriteRenderer>().sprite = HalfLeftBarrier;
+                }
             }
         }
 	}
@@ -36,20 +79,26 @@ public class BarrierScript : MonoBehaviour {
         //first barrier
         int count = 0;
         float xPos = 1.83f;
+        cubeList.Add((GameObject)Instantiate(rightSide, new Vector3(xPos, -2), Quaternion.identity));
+        xPos -= 0.38f;
+        while (count < 2)
+        {
+            cubeList.Add((GameObject)Instantiate(cube, new Vector3(xPos, -2), Quaternion.identity));
+            xPos -= 0.38f;
+            count++;
+        }
+        cubeList.Add((GameObject)Instantiate(leftSide, new Vector3(xPos, -2), Quaternion.identity));
+
+        //second barrier
+        xPos = -0.85f;
+        cubeList.Add((GameObject)Instantiate(rightSide, new Vector3(xPos, -2), Quaternion.identity));
+        xPos -= 0.38f;
         while (count < 4)
         {
             cubeList.Add((GameObject)Instantiate(cube, new Vector3(xPos, -2), Quaternion.identity));
             xPos -= 0.38f;
             count++;
         }
-
-        //second barrier
-        xPos = -0.85f;
-        while (count < 8)
-        {
-            cubeList.Add((GameObject)Instantiate(cube, new Vector3(xPos, -2), Quaternion.identity));
-            xPos -= 0.38f;
-            count++;
-        }
+        cubeList.Add((GameObject)Instantiate(leftSide, new Vector3(xPos, -2), Quaternion.identity));
     }
 }

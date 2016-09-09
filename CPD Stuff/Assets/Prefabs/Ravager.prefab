@@ -90,15 +90,15 @@ MonoBehaviour:
   spawnControl: {fileID: 152858, guid: b5de64e9223bdd54c864048000df6695, type: 2}
   healthPickup: {fileID: 1000010495507440, guid: 8d13ca4ff5e91aa42a6b52b23d1f2cab,
     type: 2}
-  player: {fileID: 157768, guid: 03181b816c4c00343af6754db265e55c, type: 2}
   attackDamage: 4
-  health: 7
+  health: 40
   currentDirection: 0
   LayerID: 0
-  fireRate: 4
+  fireRate: 2
   directionChangeDelay: 1
   timeSinceFlip: 0
   verticalTimeDelay: 5
+  moveSpeed: 2.5
 --- !u!212 &21225082
 SpriteRenderer:
   m_ObjectHideFlags: 1

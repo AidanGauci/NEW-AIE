@@ -39,7 +39,7 @@ public class SquadController : MonoBehaviour {
 		for (int i = 0; i < activeEnemies.Count; i++)
 		{
 			EnemyController currentEnemy = activeEnemies [i];
-			float moveAmount = (1 * currentEnemy.currentDirection) * Time.deltaTime;
+			float moveAmount = (currentEnemy.moveSpeed * currentEnemy.currentDirection) * Time.deltaTime;
 			currentEnemy.transform.position += new Vector3 (moveAmount, 0, 0);
 
 			if (currentEnemy.CheckIfDead ())
