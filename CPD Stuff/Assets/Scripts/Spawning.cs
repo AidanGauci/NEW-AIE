@@ -17,6 +17,7 @@ public class Spawning : MonoBehaviour {
 	private int currentMoveDir = -1;
 	private bool b_LoadingLevel = false;
     private EnemyController healthRestrict;
+	private GameObject myPlayer;
 
 	// Use this for initialization
 	void Start () {
@@ -30,28 +31,25 @@ public class Spawning : MonoBehaviour {
 	void Update () {
 		if (aliveEnemies == 0 && !b_LoadingLevel)
 		{
-			LoadNextLevel ();
-            if (healthCanSpawn)
-            {
-                healthLevel = currentLevel;
-            }
+			b_LoadingLevel = true;
+			int nextLevelDelay = CheckForActiveBullets ();
+			Invoke ("LoadNextLevel", nextLevelDelay);
 		}
 	}
 
 	// 
 	void ChangeMoveDir ()
 	{
-		//currentMoveDir *= -1;
+		currentMoveDir *= -1;
 	}
 
 
 	public void LoadPlayer()
 	{
-		GameObject newPlayer = Instantiate (player, new Vector3 (0, -3, 0), Quaternion.Euler (0, 0, 180)) as GameObject;
+		myPlayer = Instantiate (player, new Vector3 (0, -3, 0), Quaternion.Euler (0, 0, 180)) as GameObject;
 	}
 	public void LoadNextLevel()
 	{
-		b_LoadingLevel = true;
 		currentLevel++;
 		if (currentLevel <= maxLevel)
 		{
@@ -59,9 +57,16 @@ public class Spawning : MonoBehaviour {
 		}
 		else if (currentLevel > maxLevel)
 		{
-			GameController GC = new GameController ();
-			GC.LoadEndMenu ();
+			GameController GC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+			GC.LoadEndMenu (myPlayer.GetComponent<PlayerScript>().score);
 		}
+
+		if (healthCanSpawn)
+		{
+			healthLevel = currentLevel;
+		}
+
+		myPlayer.GetComponent<PlayerScript>().canShoot = true;
 	}
 
 	void LoadLevel1()
@@ -104,7 +109,6 @@ public class Spawning : MonoBehaviour {
 			aliveEnemies++;
 			startX += 2f;
 			Debug.Log("Spawn enemy " + aliveEnemies);
-			b_LoadingLevel = false;
 		}
 		ChangeMoveDir ();
 		startX = -2f;
@@ -217,4 +221,26 @@ public class Spawning : MonoBehaviour {
 		GetComponent<SquadController> ().GetEnemies ();
 	}
 
+	int CheckForActiveBullets()
+	{
+		GameObject[] bullets = GameObject.FindGameObjectsWithTag ("Bullet");
+		float max = 0;
+		for (int i = 0; i < bullets.Length; i++)
+		{
+			float temp = bullets [i].GetComponent<BulletScript> ().lifetime;
+			if (temp > max)
+			{
+				max = temp;
+			}
+		}
+
+		if (max != 0)
+		{
+			myPlayer.GetComponent<PlayerScript>().canShoot = false;
+		}
+
+		int finalDelay = (int)max + 1;
+
+		return finalDelay;
+	}
 }
