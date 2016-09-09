@@ -55,8 +55,8 @@ public class EnemyController : MonoBehaviour {
 
 	void FireBullet()
 	{
-		//Debug.Log ("Fire");
-		Instantiate (bullet, bulletSpawnPos.position, Quaternion.identity);
+		GameObject newBullet = (GameObject)Instantiate (bullet, bulletSpawnPos.position, Quaternion.identity);
+        newBullet.GetComponent<BulletScript>().damage = attackDamage;
 		Invoke("FireBullet", fireRate);
 	}
 
@@ -64,7 +64,7 @@ public class EnemyController : MonoBehaviour {
 	{
 		if (health == 0)
 		{
-            if ((Random.value <= 1) && spawnLink.healthCanSpawn && (thePlayer.currentHealth != thePlayer.maxHealth))
+            if ((Random.value <= 0.25f) && spawnLink.healthCanSpawn && (thePlayer.currentHealth != thePlayer.maxHealth))
             {
                 Instantiate(healthPickup, transform.position, Quaternion.identity);
                 spawnLink.healthCanSpawn = false;

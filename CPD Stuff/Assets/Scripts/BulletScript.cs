@@ -8,7 +8,7 @@ public class BulletScript : MonoBehaviour {
     public float lifetime;
     public string bulletTag;
     public Vector3 direction;
-    
+    public int damage;
 
     //private member variables
 
@@ -57,8 +57,9 @@ public class BulletScript : MonoBehaviour {
                 PlayerScript player = hit.GetComponent<PlayerScript>();
                 if (player.delayTime == 0)
                 {
-                    player.currentHealth--;
+                    player.currentHealth -= damage;
                     player.delayTime = player.InvulnTime;
+                    player.makeFlash();
                 }
                 Destroy(gameObject);
                 Debug.Log("Player hit by Enemy Bullet");
@@ -69,7 +70,7 @@ public class BulletScript : MonoBehaviour {
             if (bulletTag == "Enemy")
             {
                 CubeScript hitCube = hit.GetComponent<CubeScript>();
-                hitCube.health--;
+                hitCube.health -= damage;
                 Destroy(gameObject);
             }
         }

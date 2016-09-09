@@ -87,7 +87,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direction: {x: 0, y: -1, z: 0}
   speed: 1
-  lifetime: 5
+  lifetime: 9
 --- !u!212 &212000010796899494
 SpriteRenderer:
   m_ObjectHideFlags: 1

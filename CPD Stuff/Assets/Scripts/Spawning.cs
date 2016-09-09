@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using System.Collections;
 
 public class Spawning : MonoBehaviour {
@@ -6,6 +7,7 @@ public class Spawning : MonoBehaviour {
     //public member variables
 	public GameObject[] enemies;
 	public GameObject player;
+    public GameObject healthGlobe;
 	public int aliveEnemies = 0;
 	public int currentLevel = 0;
     [HideInInspector]
@@ -13,32 +15,58 @@ public class Spawning : MonoBehaviour {
     public int healthLevel;
 
     //private member variables
-	private int maxLevel = 5;
+    private int maxLevel = 5;
 	private int currentMoveDir = -1;
+    private int refPlayerHealth;
 	private bool b_LoadingLevel = false;
-    private EnemyController healthRestrict;
 	private GameObject myPlayer;
+    private PlayerScript thisPlayer;
+    private List<GameObject> HealthMeter = new List<GameObject>();
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		LoadPlayer ();
 		LoadNextLevel ();
-        healthRestrict = GetComponent<EnemyController>();
+        thisPlayer = myPlayer.GetComponent<PlayerScript>();
         healthLevel = currentLevel;
-	}
+        float xPos = -1.361f;
+        for (int count = 0; count < 10; count++)
+        {
+            GameObject newHealth = (GameObject)Instantiate(healthGlobe, new Vector3(xPos, 4.676f, 0), Quaternion.identity);
+            HealthMeter.Add(newHealth);
+            xPos += 0.343f;
+        }
+        refPlayerHealth = thisPlayer.maxHealth;
+    }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+{
 		if (aliveEnemies == 0 && !b_LoadingLevel)
 		{
 			b_LoadingLevel = true;
 			int nextLevelDelay = CheckForActiveBullets ();
 			Invoke ("LoadNextLevel", nextLevelDelay);
 		}
-	}
+        if (thisPlayer.currentHealth != refPlayerHealth)
+        {
+            for (int count = refPlayerHealth - 1; count > thisPlayer.currentHealth - 1; count--)
+            {
+                HealthMeter[count].SetActive(false);
+            }
+        }
+        if (thisPlayer.currentHealth == thisPlayer.maxHealth)
+        {
+            for (int count = 0; count < 10; count++)
+            {
+                HealthMeter[count].SetActive(true);
+            }
+        }
+    }
 
-	// 
-	void ChangeMoveDir ()
+    // 
+    void ChangeMoveDir ()
 	{
 		currentMoveDir *= -1;
 	}

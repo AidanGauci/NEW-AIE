@@ -159,4 +159,19 @@ public class PlayerScript : MonoBehaviour {
     {
         
     }
+
+    public void makeFlash()
+    {
+        StartCoroutine("PlayerFlash");
+    }
+
+    IEnumerator PlayerFlash()
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            Debug.Log("Loop " + i);
+            GetComponent<SpriteRenderer>().enabled = !GetComponent<SpriteRenderer>().enabled;
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
 }

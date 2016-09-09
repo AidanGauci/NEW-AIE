@@ -22,7 +22,7 @@ public class BarrierScript : MonoBehaviour {
 	    for (int count = 0; count < cubeList.Count; count++)
         {
             //kill cubes that have no health left
-            if (cubeList[count].GetComponent<CubeScript>().health == 0)
+            if (cubeList[count].GetComponent<CubeScript>().health <= 0)
             {
                 Destroy(cubeList[count]);
                 cubeList.RemoveAt(count);

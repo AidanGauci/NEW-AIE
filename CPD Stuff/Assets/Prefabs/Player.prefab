@@ -74,14 +74,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bfca640da345224bab7b5218479c59f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
-  currentHealth: 5
+  maxHealth: 10
+  currentHealth: 10
+  score: 0
   speed: 3
   fireRate: 0.5
   InvulnTime: 1
   delayTime: 0
-  scoreOutput: {fileID: 0}
   bullet: {fileID: 664009066, guid: 88d9c50ef402e6b44b2d463e9c7f063c, type: 2}
+  canShoot: 1
 --- !u!212 &21235358
 SpriteRenderer:
   m_ObjectHideFlags: 1
