@@ -13,7 +13,7 @@ public class EnemyController : MonoBehaviour {
 	public int currentDirection;
 	public int LayerID;
     public float fireRate = 2f;
-	public float directionChangeDelay = 1f;
+	public float directionChangeDelay = 1.5f;
 	public float timeSinceFlip = 0;
 	public float verticalTimeDelay = 10f;
     public float moveSpeed = 1;

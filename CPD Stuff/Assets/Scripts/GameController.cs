@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour {
 		SceneManager.LoadScene ("EndMenu");
 
 		RoundScore = Score;
-		Invoke("SendScore", 0.01f);
+		Invoke("SendScore", 0.05f);
 	}
 
 	public void QuitGame()

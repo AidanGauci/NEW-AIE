@@ -9,25 +9,35 @@ using System;
 public class EndScreenController : MonoBehaviour {
 
 	public GameObject NameEnterCanvas;
+	public Button QuitButton;
+	public Button RestartButton;
 	public Text textBox;
 	public int score;
 
 	private string playerName;
 	private string filename;
 	private List<string> Names = new List<string>();
-	private List<string> Scores = new List<string>();
+	private List<int> Scores = new List<int>();
 	private int TopScores = 10;
 
 	// Use this for initialization
 	void Start () {
 		filename = Application.dataPath + "/highScores.txt";
 		NameEnterCanvas.SetActive (true);
+		QuitButton.interactable = false;
+		RestartButton.interactable = false;
 	}
 
 	public void SetName()
 	{
 		playerName = textBox.text;
+		if (playerName == "")
+		{
+			playerName = "Ghost";
+		}
 		NameEnterCanvas.SetActive (false);
+		QuitButton.interactable = true;
+		RestartButton.interactable = true;
 		GetHighScores ();
 		DisplayScores ();
 		SaveHighScores ();
@@ -55,7 +65,19 @@ public class EndScreenController : MonoBehaviour {
 
 	void GetHighScores()
 	{
-		try
+		for (int i = 0; i < TopScores; i++) {
+			string tempName = PlayerPrefs.GetString ("Name" + i, "FailedToLoadAName");
+
+			if (tempName == "FailedToLoadAName")
+			{
+				break;
+			}
+			int tempScore = PlayerPrefs.GetInt ("Score" + i);
+			Names.Add (tempName);
+			Scores.Add (tempScore);
+		}
+
+		/*try
 		{
 			string line;
 
@@ -80,7 +102,7 @@ public class EndScreenController : MonoBehaviour {
 		catch (Exception ex)
 		{
 			Console.WriteLine ("{0}\n", ex.Message);
-		}
+		}*/
 	}
 
 	void SortOrder()
@@ -88,28 +110,32 @@ public class EndScreenController : MonoBehaviour {
 		if (Names.Count == 0)
 		{
 			Names.Add (playerName);
-			Scores.Add (score.ToString ());
+			Scores.Add (score);
 		} 
 		else
 		{
-			
 			for (int i = 0; i < Names.Count; i++)
 			{
 				if (score > Convert.ToInt32 (Scores [i]))
 				{
 					Names.Insert (i, playerName);
-					Scores.Insert (i, score.ToString ());
+					Scores.Insert (i, score);
 					break;
 				}
 			}
 			Names.Add (playerName);
-			Scores.Add (score.ToString ());
+			Scores.Add (score);
 		}
 	}
 
 	void SaveHighScores()
 	{
-		try
+		for (int i = 0; i < TopScores; i++) {
+			PlayerPrefs.SetString ("Name" + i, Names [i]);
+			PlayerPrefs.SetInt ("Score" + i, Scores[i]);
+		}
+
+		/*try
 		{
 			StreamWriter writer = new StreamWriter (filename, false);
 			for (int i = 0; i < TopScores; i++) {
@@ -122,6 +148,6 @@ public class EndScreenController : MonoBehaviour {
 		catch (Exception ex)
 		{
 			Console.WriteLine ("{0}\n", ex.Message);
-		}
+		}*/
 	}
 }

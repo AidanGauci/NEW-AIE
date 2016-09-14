@@ -39,7 +39,7 @@ public class PlayerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetAxis("Horizontal") > 0)
+        /*if (Input.GetAxis("Horizontal") > 0)
         {
             SwitchOn(1);
         }
@@ -47,20 +47,20 @@ public class PlayerScript : MonoBehaviour {
         {
             SwitchOn(-1);
         }
-        else
+		else if (Input.GetAxis("Horizontal") == 0)
         {
             SwitchOff(-1);
             SwitchOff(1);
-        }
+        }*/
 
-        if (Input.GetAxisRaw("Jump") != 0 && canShoot)
+        /*if (Input.GetAxisRaw("Jump") != 0 && canShoot)
         {
             FireShot();
         }
         else
         {
             StopShoot();
-        }
+        }*/
 
 
 
@@ -108,7 +108,14 @@ public class PlayerScript : MonoBehaviour {
     //shoots bullet from player
     public void FireShot()
     {
-        canFire = true;
+		if (canShoot)
+		{
+			canFire = true;
+		}
+		else
+		{
+			canFire = false;
+		}
     }
 
     public void StopShoot()
@@ -138,6 +145,7 @@ public class PlayerScript : MonoBehaviour {
     //SwitchOn and SwitchOff both used to move player
     public void SwitchOff(int direction)
     {
+		Debug.Log ("Button off");
         if (direction == -1)
         {
             leftPress = false;
@@ -150,6 +158,7 @@ public class PlayerScript : MonoBehaviour {
 
     public void SwitchOn(int direction)
     {
+		Debug.Log ("Button on");
         if (direction == -1)
         {
             leftPress = true;
@@ -166,7 +175,9 @@ public class PlayerScript : MonoBehaviour {
     //calls end game screen when out of health
     void EndGame()
     {
-        
+		GameController GC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+
+		GC.LoadEndMenu (score);
     }
 
     public void makeFlash()
@@ -178,7 +189,6 @@ public class PlayerScript : MonoBehaviour {
     {
         for (int i = 0; i < 20; i++)
         {
-            Debug.Log("Loop " + i);
             GetComponent<SpriteRenderer>().enabled = !GetComponent<SpriteRenderer>().enabled;
             yield return new WaitForSeconds(0.05f);
         }

@@ -37,7 +37,6 @@ public class BulletScript : MonoBehaviour {
     //Deals with collision of bullet with gameobjects, differentiated by "tags"
     void OnTriggerEnter2D(Collider2D hit)
     {
-        Debug.Log("I work I promise");
         if (hit.gameObject.tag == "Enemy")
         {
             //deals with enemy hit by player
@@ -46,7 +45,6 @@ public class BulletScript : MonoBehaviour {
                 EnemyController enemy = hit.GetComponent<EnemyController>();
                 enemy.health--;
                 Destroy(gameObject);
-                Debug.Log("Enemy hit by Player Bullet");
             }
         }
         else if (hit.gameObject.tag == "Player")
@@ -62,7 +60,6 @@ public class BulletScript : MonoBehaviour {
                     player.makeFlash();
                 }
                 Destroy(gameObject);
-                Debug.Log("Player hit by Enemy Bullet");
             }
         }
         else if (hit.gameObject.tag == "Cube")

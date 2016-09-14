@@ -19,7 +19,6 @@ public class Spawning : MonoBehaviour {
 	private int currentMoveDir = -1;
     private int refPlayerHealth;
 	private bool b_LoadingLevel = false;
-	private GameObject myPlayer;
 	private GameObject player;
     private PlayerScript thisPlayer;
     private List<GameObject> HealthMeter = new List<GameObject>();
@@ -33,7 +32,6 @@ public class Spawning : MonoBehaviour {
 
     void Start ()
     {
-        //LoadPlayer ();
 		LoadNextLevel ();
         healthLevel = currentLevel;
         float xPos = -1.361f;
@@ -76,12 +74,7 @@ public class Spawning : MonoBehaviour {
 	{
 		currentMoveDir *= -1;
 	}
-
-
-	public void LoadPlayer()
-	{
-		myPlayer = Instantiate (player, new Vector3 (0, -3, 0), Quaternion.Euler (0, 0, 180)) as GameObject;
-	}
+		
 	public void LoadNextLevel()
 	{
 		currentLevel++;
@@ -114,7 +107,6 @@ public class Spawning : MonoBehaviour {
 			enemy.GetComponent<EnemyController> ().LayerID = 0;
 			aliveEnemies++;
 			startX += 1.2f;
-			Debug.Log("Spawn enemy " + aliveEnemies);
 		}
 		ChangeMoveDir ();
 		startX = -1.4f;
@@ -125,7 +117,6 @@ public class Spawning : MonoBehaviour {
 			enemy.GetComponent<EnemyController> ().LayerID = 1;
 			aliveEnemies++;
 			startX += 1.2f;
-			Debug.Log("Spawn enemy " + aliveEnemies);
 		}
 		b_LoadingLevel = false;
 		GetComponent<SquadController> ().GetEnemies ();
@@ -142,7 +133,6 @@ public class Spawning : MonoBehaviour {
 			enemy.GetComponent<EnemyController> ().LayerID = 1;
 			aliveEnemies++;
 			startX += 2f;
-			Debug.Log("Spawn enemy " + aliveEnemies);
 		}
 		ChangeMoveDir ();
 		startX = -2f;
@@ -153,7 +143,6 @@ public class Spawning : MonoBehaviour {
 			enemy.GetComponent<EnemyController> ().LayerID = 0;
 			aliveEnemies++;
 			startX += 4f;
-			Debug.Log("Spawn enemy " + aliveEnemies);
 		}
 		GameObject _enemy = (GameObject) Instantiate (enemies[3], new Vector3 (0, 1.5f, 0), Quaternion.identity);
 		aliveEnemies++;
@@ -175,7 +164,6 @@ public class Spawning : MonoBehaviour {
 			enemy.GetComponent<EnemyController> ().LayerID = 0;
 			aliveEnemies++;
 			startX += 1.2f;
-			Debug.Log("Spawn enemy " + aliveEnemies);
 		}
 		startX = -1.5f;
 		ChangeMoveDir ();
@@ -186,7 +174,6 @@ public class Spawning : MonoBehaviour {
 			enemy.GetComponent<EnemyController> ().LayerID = 1;
 			aliveEnemies++;
 			startX += 2.5f;
-			Debug.Log("Spawn enemy " + aliveEnemies);
 		}
 		b_LoadingLevel = false;
 		GetComponent<SquadController> ().GetEnemies ();
@@ -204,7 +191,6 @@ public class Spawning : MonoBehaviour {
 			enemy.GetComponent<EnemyController> ().LayerID = 0;
 			aliveEnemies++;
 			startX += 1.5f;
-			Debug.Log("Spawn enemy " + aliveEnemies);
 		}
 		startX = -1f;
 		ChangeMoveDir ();
@@ -215,7 +201,6 @@ public class Spawning : MonoBehaviour {
 			enemy.GetComponent<EnemyController> ().LayerID = 1;
 			aliveEnemies++;
 			startX += 2f;
-			Debug.Log("Spawn enemy " + aliveEnemies);
 		}
 		startX = -1.5f;
 		ChangeMoveDir ();
@@ -226,7 +211,6 @@ public class Spawning : MonoBehaviour {
 			enemy.GetComponent<EnemyController> ().LayerID = 2;
 			aliveEnemies++;
 			startX += 1.5f;
-			Debug.Log("Spawn enemy " + aliveEnemies);
 		}
 		b_LoadingLevel = false;
 		GetComponent<SquadController> ().GetEnemies ();
@@ -244,7 +228,6 @@ public class Spawning : MonoBehaviour {
 			enemy.GetComponent<EnemyController> ().LayerID = 0;
 			aliveEnemies++;
 			startX += 3f;
-			Debug.Log("Spawn enemy " + aliveEnemies);
 		}
 		ChangeMoveDir ();
 		GameObject _enemy = (GameObject) Instantiate (enemies[4], new Vector3 (0, 3.2f, 0), Quaternion.identity);
