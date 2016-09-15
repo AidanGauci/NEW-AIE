@@ -6,12 +6,16 @@ public class HealthPickupScript : MonoBehaviour {
     //public member variables
     public Vector3 direction = Vector3.down;
     public float speed = 1;
-    public float lifetime = 5;
+    public float lifetime = 10;
+	public AudioClip impact;
+
+	//private member variables
+	private AudioSource myAudio;
 
 	// Use this for initialization
 	void Start ()
     {
-	    
+		myAudio = GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -33,7 +37,9 @@ public class HealthPickupScript : MonoBehaviour {
         {
             PlayerScript player = hit.gameObject.GetComponent<PlayerScript>();
             player.currentHealth = player.maxHealth;
-            Destroy(gameObject);
+			player.timesHealthPickedUp++;
+			transform.position = new Vector2 (100, 100);
+			myAudio.Play ();
         }
     }
 }

@@ -14,20 +14,26 @@ public class PlayerScript : MonoBehaviour {
     public float InvulnTime = 1;
     public float delayTime;
     public GameObject bullet;
+
 	[HideInInspector]
 	public bool canShoot = true;
+	[HideInInspector]
+	public float bulletsHit = 0;
+	[HideInInspector]
+	public int timesHealthPickedUp = 0;
 
     //private member variables
     private Vector3 pos = new Vector3(0, -3, 0);
     private Vector3 prevPos = new Vector3(0, -3, 0);
     private float currentFireRate;
     private int m_direction = 0;
+	private float bulletsFired = 0;
     private bool leftPress = false;
     private bool rightPress = false;
     private bool canFire = false;
     private float screenHalfWidthInWorldUnits;
-	
-    //used to initialize shtuff
+    
+	//used to initialize shtuff
     void Start()
     {
         float halfSelfWidth = transform.localScale.x / 2;
@@ -39,31 +45,6 @@ public class PlayerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        /*if (Input.GetAxis("Horizontal") > 0)
-        {
-            SwitchOn(1);
-        }
-        else if (Input.GetAxis("Horizontal") < 0)
-        {
-            SwitchOn(-1);
-        }
-		else if (Input.GetAxis("Horizontal") == 0)
-        {
-            SwitchOff(-1);
-            SwitchOff(1);
-        }*/
-
-        /*if (Input.GetAxisRaw("Jump") != 0 && canShoot)
-        {
-            FireShot();
-        }
-        else
-        {
-            StopShoot();
-        }*/
-
-
-
         //end-game stuff
         if (currentHealth <= 0)// || end-game constraints met)
         {
@@ -77,6 +58,7 @@ public class PlayerScript : MonoBehaviour {
         }
         if (currentFireRate <= 0 && canFire)
         {
+			bulletsFired++;
             Vector3 bulletPos = transform.position + (Vector3.up * 0.1f);
             Instantiate(bullet, bulletPos, Quaternion.identity);
             currentFireRate = fireRate;
@@ -136,16 +118,11 @@ public class PlayerScript : MonoBehaviour {
         {
             transform.position += Vector3.right * speed * Time.deltaTime;
         }
-        else
-        {
-
-        }
     }
 
     //SwitchOn and SwitchOff both used to move player
     public void SwitchOff(int direction)
     {
-		Debug.Log ("Button off");
         if (direction == -1)
         {
             leftPress = false;
@@ -158,7 +135,6 @@ public class PlayerScript : MonoBehaviour {
 
     public void SwitchOn(int direction)
     {
-		Debug.Log ("Button on");
         if (direction == -1)
         {
             leftPress = true;
@@ -173,8 +149,13 @@ public class PlayerScript : MonoBehaviour {
 
 
     //calls end game screen when out of health
-    void EndGame()
+    public void EndGame()
     {
+		float n = (bulletsHit / bulletsFired) * 100;
+		score *= (int)n;
+		score += 50 * currentHealth;
+		score -= (timesHealthPickedUp * 300);
+
 		GameController GC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
 		GC.LoadEndMenu (score);

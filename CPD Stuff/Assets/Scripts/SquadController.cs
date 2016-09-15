@@ -9,7 +9,7 @@ public class SquadController : MonoBehaviour {
 	private List<EnemyController> activeEnemies = new List<EnemyController>();
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		float halfSelfWidth = transform.localScale.x / 2;
 		screenHalfWidthInWorldUnits = Camera.main.aspect * Camera.main.orthographicSize - halfSelfWidth;
 		spawnLink = GetComponent<Spawning> ();
@@ -25,11 +25,10 @@ public class SquadController : MonoBehaviour {
 			{
 				currentEnemy.StartCoroutine("MoveDown");
 			}
-			if (currentEnemy.transform.position.x < -screenHalfWidthInWorldUnits ||
-				currentEnemy.transform.position.x > screenHalfWidthInWorldUnits &&
+			if ((currentEnemy.transform.position.x < -screenHalfWidthInWorldUnits ||
+				currentEnemy.transform.position.x > screenHalfWidthInWorldUnits) &&
 				currentEnemy.timeSinceFlip <= 0)
 			{
-				currentEnemy.timeSinceFlip = currentEnemy.directionChangeDelay;
 				currentEnemy.currentDirection *= -1;
 				currentEnemy.timeSinceFlip = currentEnemy.directionChangeDelay;
 				ChangeDirIfYSame (currentEnemy);

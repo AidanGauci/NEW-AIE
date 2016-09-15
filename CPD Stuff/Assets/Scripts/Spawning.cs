@@ -53,7 +53,7 @@ public class Spawning : MonoBehaviour {
 			int nextLevelDelay = CheckForActiveBullets ();
 			Invoke ("LoadNextLevel", nextLevelDelay);
 		}
-        if (thisPlayer.currentHealth != refPlayerHealth)
+		if (thisPlayer.currentHealth != refPlayerHealth && thisPlayer.currentHealth > 0)
         {
             for (int count = refPlayerHealth - 1; count > thisPlayer.currentHealth - 1; count--)
             {
@@ -77,15 +77,17 @@ public class Spawning : MonoBehaviour {
 		
 	public void LoadNextLevel()
 	{
+		b_LoadingLevel = true;
 		currentLevel++;
 		if (currentLevel <= maxLevel)
 		{
 			Invoke ("LoadLevel" + currentLevel, 0);
+			BarrierScript BS = GameObject.Find ("Barrier").GetComponent<BarrierScript> ();
+			BS.UpHealth ();
 		}
 		else if (currentLevel > maxLevel)
 		{
-			GameController GC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-			GC.LoadEndMenu (thisPlayer.score);
+			thisPlayer.EndGame ();
 		}
 
 		if (healthCanSpawn)
@@ -144,7 +146,7 @@ public class Spawning : MonoBehaviour {
 			aliveEnemies++;
 			startX += 4f;
 		}
-		GameObject _enemy = (GameObject) Instantiate (enemies[3], new Vector3 (0, 1.5f, 0), Quaternion.identity);
+		GameObject _enemy = (GameObject) Instantiate (enemies[2], new Vector3 (0, 1.5f, 0), Quaternion.identity);
 		aliveEnemies++;
         _enemy.GetComponent<EnemyController> ().currentDirection = currentMoveDir;
 		_enemy.GetComponent<EnemyController> ().LayerID = 0;
@@ -186,7 +188,7 @@ public class Spawning : MonoBehaviour {
 		ChangeMoveDir ();
 		for (int i = 0; i < 3; i++)
 		{
-			GameObject enemy = (GameObject) Instantiate (enemies[1], new Vector3 (startX, 3, 0), Quaternion.identity);
+			GameObject enemy = (GameObject) Instantiate (enemies[1], new Vector3 (startX, 3.6f, 0), Quaternion.identity);
 			enemy.GetComponent<EnemyController> ().currentDirection = currentMoveDir;
 			enemy.GetComponent<EnemyController> ().LayerID = 0;
 			aliveEnemies++;
@@ -196,7 +198,7 @@ public class Spawning : MonoBehaviour {
 		ChangeMoveDir ();
 		for (int i = 0; i < 2; i++)
 		{
-			GameObject enemy = (GameObject) Instantiate (enemies[3], new Vector3 (startX, 1.5f, 0), Quaternion.identity);
+			GameObject enemy = (GameObject) Instantiate (enemies[3], new Vector3 (startX, 2.1f, 0), Quaternion.identity);
 			enemy.GetComponent<EnemyController> ().currentDirection = currentMoveDir;
 			enemy.GetComponent<EnemyController> ().LayerID = 1;
 			aliveEnemies++;
@@ -206,7 +208,7 @@ public class Spawning : MonoBehaviour {
 		ChangeMoveDir ();
 		for (int i = 0; i < 3; i++)
 		{
-			GameObject enemy = (GameObject) Instantiate (enemies[2], new Vector3 (startX, 0, 0), Quaternion.identity);
+			GameObject enemy = (GameObject) Instantiate (enemies[2], new Vector3 (startX, .6f, 0), Quaternion.identity);
 			enemy.GetComponent<EnemyController> ().currentDirection = currentMoveDir;
 			enemy.GetComponent<EnemyController> ().LayerID = 2;
 			aliveEnemies++;

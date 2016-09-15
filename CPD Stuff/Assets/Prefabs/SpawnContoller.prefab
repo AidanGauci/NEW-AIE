@@ -47,13 +47,12 @@ MonoBehaviour:
   - {fileID: 101474, guid: dfc2725736a0ea34289a921c30598444, type: 2}
   - {fileID: 135382, guid: 0d538b0d8ec3c3946879432fe4153560, type: 2}
   - {fileID: 110584, guid: 5f40d4eb6a10d0b4a951d6c3b21a247a, type: 2}
-  player: {fileID: 0}
   healthGlobe: {fileID: 1000011260870338, guid: 0e838f4488884bb4e99480bebabcc9ed,
     type: 2}
   aliveEnemies: 0
   currentLevel: 0
-  healthCanSpawn: 1
   healthLevel: 0
+  healthCanSpawn: 1
 --- !u!114 &11483280
 MonoBehaviour:
   m_ObjectHideFlags: 1

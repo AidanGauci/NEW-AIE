@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour {
 	public int health = 2;
 	public int currentDirection;
 	public int LayerID;
+	public int enemyWorth;
     public float fireRate = 2f;
 	public float directionChangeDelay = 1.5f;
 	public float timeSinceFlip = 0;
@@ -19,18 +20,22 @@ public class EnemyController : MonoBehaviour {
     public float moveSpeed = 1;
     
     //private member variables
-    private float maxVerticalTimeDelay = 10f;
+	private float maxVerticalTimeDelay = 10f;
 	private float fireDelay;
 	private Spawning spawnLink;
     private GameObject player;
     private PlayerScript thePlayer;
 
+	void Awake ()
+	{
+		spawnLink = GameObject.Find("SpawnContoller").GetComponent<Spawning>();
+	}
+
     // Use this for initialization
     void Start () {
-		fireDelay = Random.Range (1, 10);
+		fireDelay = Random.Range (1, 5);
 		Invoke("FireBullet", fireDelay);
         player = GameObject.FindGameObjectWithTag("Player");
-		spawnLink = GameObject.Find("SpawnContoller").GetComponent<Spawning>();
         thePlayer = player.GetComponent<PlayerScript>();
 	}
 	
@@ -46,7 +51,7 @@ public class EnemyController : MonoBehaviour {
 			timeSinceFlip -= Time.deltaTime;
 		}
 
-        if ((spawnLink.healthLevel + 3) == spawnLink.currentLevel && !spawnLink.healthCanSpawn)
+        if ((spawnLink.healthLevel + 2) == spawnLink.currentLevel && !spawnLink.healthCanSpawn)
         {
             Debug.Log("i have reset (bool)");
             spawnLink.healthCanSpawn = true;
@@ -57,20 +62,47 @@ public class EnemyController : MonoBehaviour {
 	void FireBullet()
 	{
 		GameObject newBullet = (GameObject)Instantiate (bullet, bulletSpawnPos.position, Quaternion.identity);
-        newBullet.GetComponent<BulletScript>().damage = attackDamage;
+		BulletScript BS = newBullet.GetComponent<BulletScript> ();
+        BS.damage = attackDamage;
+		BS.SetAudioPitch(GetPitch ());
 		Invoke("FireBullet", fireRate);
+	}
+
+	float GetPitch()
+	{
+		if (transform.name == "Pawn(Clone)")
+		{
+			return 1f;
+		}
+		else if (transform.name == "Hawk(Clone)")
+		{
+			return 2f;
+		}
+		else if (transform.name == "Gauntler(Clone)")
+		{
+			return 0.7f;
+		}
+		else if (transform.name == "Vida(Clone)")
+		{
+			return 1.5f;
+		}
+		else if (transform.name == "Ravager(Clone)")
+		{
+			return 0.5f;
+		}
+		return 1;
 	}
 
 	public bool CheckIfDead()
 	{
 		if (health == 0)
 		{
-            if ((Random.value <= 0.2f) && spawnLink.healthCanSpawn && (thePlayer.currentHealth != thePlayer.maxHealth))
+            if ((Random.value <= 0.35f) && spawnLink.healthCanSpawn && (thePlayer.currentHealth != thePlayer.maxHealth))
             {
                 Instantiate(healthPickup, transform.position, Quaternion.identity);
                 spawnLink.healthCanSpawn = false;
             }
-			thePlayer.score++;
+			thePlayer.score += enemyWorth;
             return true;
 		}
 		return false;
@@ -90,5 +122,25 @@ public class EnemyController : MonoBehaviour {
 		}
 		newPos.x = transform.position.x;
 		transform.position = newPos;
+	}
+
+	void OnTriggerEnter2D(Collider2D hit)
+	{
+		if (hit.gameObject.tag == "Player")
+		{
+			//deals with player hit by enemy
+			PlayerScript player = hit.GetComponent<PlayerScript> ();
+			if (player.delayTime == 0)
+			{
+				player.currentHealth = 0;
+			}
+			health = 0;
+		}
+		else if (hit.gameObject.tag == "Cube")
+		{
+			CubeScript hitCube = hit.GetComponent<CubeScript> ();
+			hitCube.health = 0;
+			health = 0;
+		}
 	}
 }

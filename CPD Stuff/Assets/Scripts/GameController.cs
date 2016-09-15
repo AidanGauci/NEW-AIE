@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour {
 
 	void Awake()
 	{
-		DontDestroyOnLoad (transform.gameObject);
+		DontDestroyOnLoad (gameObject);
 	}
 
 	public void LoadGameScene()
@@ -22,13 +22,17 @@ public class GameController : MonoBehaviour {
 		SceneManager.LoadScene ("MainMenu");
 	}
 
-
 	public void LoadEndMenu(int Score)
 	{
 		SceneManager.LoadScene ("EndMenu");
 
 		RoundScore = Score;
 		Invoke("SendScore", 0.05f);
+	}
+
+	public void LoadControls()
+	{
+		SceneManager.LoadScene ("ControlsScreen");
 	}
 
 	public void QuitGame()

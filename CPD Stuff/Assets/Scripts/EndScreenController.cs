@@ -76,33 +76,6 @@ public class EndScreenController : MonoBehaviour {
 			Names.Add (tempName);
 			Scores.Add (tempScore);
 		}
-
-		/*try
-		{
-			string line;
-
-			StreamReader reader = new StreamReader (filename);
-
-			using (reader)
-			{
-				do
-				{
-					line = reader.ReadLine ();
-					if (line != null)
-					{
-						string[] entries = line.Split (',');
-						Names.Add(entries[0]);
-						Scores.Add(entries[1]);
-					}
-				} while (line != null);
-
-			}
-			reader.Close ();
-		}
-		catch (Exception ex)
-		{
-			Console.WriteLine ("{0}\n", ex.Message);
-		}*/
 	}
 
 	void SortOrder()
@@ -114,17 +87,22 @@ public class EndScreenController : MonoBehaviour {
 		} 
 		else
 		{
+			bool notAdded = true;
 			for (int i = 0; i < Names.Count; i++)
 			{
 				if (score > Convert.ToInt32 (Scores [i]))
 				{
 					Names.Insert (i, playerName);
 					Scores.Insert (i, score);
+					notAdded = false;
 					break;
 				}
 			}
-			Names.Add (playerName);
-			Scores.Add (score);
+			if (notAdded)
+			{
+				Names.Add (playerName);
+				Scores.Add (score);
+			}
 		}
 	}
 
@@ -134,20 +112,5 @@ public class EndScreenController : MonoBehaviour {
 			PlayerPrefs.SetString ("Name" + i, Names [i]);
 			PlayerPrefs.SetInt ("Score" + i, Scores[i]);
 		}
-
-		/*try
-		{
-			StreamWriter writer = new StreamWriter (filename, false);
-			for (int i = 0; i < TopScores; i++) {
-				writer.WriteLine(Names[i] + "," + Scores[i]);
-			}
-
-			writer.Close();
-			
-		}
-		catch (Exception ex)
-		{
-			Console.WriteLine ("{0}\n", ex.Message);
-		}*/
 	}
 }

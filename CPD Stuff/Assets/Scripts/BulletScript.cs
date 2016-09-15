@@ -9,16 +9,22 @@ public class BulletScript : MonoBehaviour {
     public string bulletTag;
     public Vector3 direction;
     public int damage;
+	public AudioClip impact;
 
     //private member variables
+	private AudioSource myAudio;
 
 
     // Use this for initialization
-    void Start ()
+    void Awake ()
     {
+		myAudio = GetComponent<AudioSource> ();
         if (bulletTag == "Enemy")
         {
             direction = GameObject.FindGameObjectWithTag("Player").transform.position - transform.position;
+			float angle = (Mathf.Atan2 (direction.y, direction.x) * Mathf.Rad2Deg) - 90;
+			Quaternion q = Quaternion.AngleAxis (angle, Vector3.forward);
+			transform.rotation = q;
         }
 	}
 	
@@ -34,6 +40,11 @@ public class BulletScript : MonoBehaviour {
         }
 	}
 
+	public void SetAudioPitch (float value)
+	{
+		myAudio.pitch = value;
+	}
+
     //Deals with collision of bullet with gameobjects, differentiated by "tags"
     void OnTriggerEnter2D(Collider2D hit)
     {
@@ -45,6 +56,9 @@ public class BulletScript : MonoBehaviour {
                 EnemyController enemy = hit.GetComponent<EnemyController>();
                 enemy.health--;
                 Destroy(gameObject);
+
+				PlayerScript player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+				player.bulletsHit++;
             }
         }
         else if (hit.gameObject.tag == "Player")
