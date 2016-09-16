@@ -31,9 +31,16 @@ public class PlayerScript : MonoBehaviour {
     private bool leftPress = false;
     private bool rightPress = false;
     private bool canFire = false;
+    private bool onAndroid = false;
     private float screenHalfWidthInWorldUnits;
-    
-	//used to initialize shtuff
+    void Awake()
+    {
+#if UNITY_ANDROID
+        onAndroid = true;
+#endif
+    }
+
+    //used to initialize shtuff
     void Start()
     {
         float halfSelfWidth = transform.localScale.x / 2;
@@ -45,8 +52,34 @@ public class PlayerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        //end-game stuff
-        if (currentHealth <= 0)// || end-game constraints met)
+        if (!onAndroid)
+        {
+            if (Input.GetAxisRaw("Horizontal") > 0)
+            {
+                SwitchOn(1);
+            }
+            else if (Input.GetAxisRaw("Horizontal") < 0)
+            {
+                SwitchOn(-1);
+            }
+            else
+            {
+                SwitchOff(1);
+                SwitchOff(-1);
+            }
+
+            if (Input.GetAxisRaw("Jump") != 0)
+            {
+                FireShot();
+            }
+            else
+            {
+                StopShoot();
+            }
+        }
+
+            //end-game stuff
+            if (currentHealth <= 0)// || end-game constraints met)
         {
             EndGame();
         }
@@ -108,10 +141,8 @@ public class PlayerScript : MonoBehaviour {
     //moves player according to button input
     void MovePlayer(int direction)
     {
-        
         if (direction == -1)
         {
-            
             transform.position += Vector3.left * speed * Time.deltaTime;
         }
         else if (direction == 1)
